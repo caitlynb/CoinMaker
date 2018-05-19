@@ -1,11 +1,11 @@
 coindia = 50;
 coinheight = 5;
-layerheight = 0.2;
-fn = 72;
-
+coinsides = 120;
+separation = 0.20;
 mincointhickness = 1.2;
 
-separation = 0.15;
+
+layerheight = 0.2;
 
 flface = "Ttails.png";
 flip = false;
@@ -19,7 +19,6 @@ part = "coin";
 //face(flimg = "Hheads.png");
 //face(flimg = "Ttails.png", flip=true);
 
-coinsides = 120;
 
 part();
 
