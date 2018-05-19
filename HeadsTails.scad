@@ -9,10 +9,10 @@ separation = 0.15;
 
 flface = "Ttails.png";
 flip = false;
-afl = "";
-bfl = "";
+afl = "outstls\\Hheads-head.stl";
+bfl = "outstls\\Ttails-tail.stl";
 
-part = "face";
+part = "coin";
 
 //coin();
 //coinsupport();

@@ -21,6 +21,10 @@ try:
 except:
     os.mkdir(tempstlfol)
 
+# debugging options
+makefaces = False;
+makecoins = True;
+
 with open(flname, 'rb') as csvfile:
     csvreader = csv.reader(csvfile)
 
@@ -42,7 +46,8 @@ with open(flname, 'rb') as csvfile:
                              (outstlname, afl, scadfl)
                     cmdline = command + ' ' + params
                     print '    ' + cmdline
-                    subprocess.call(cmdline)
+                    if makefaces:
+                        subprocess.call(cmdline)
                 else:
                     # error state
                     print("Cannot find texture: %s" % afl)
@@ -57,7 +62,8 @@ with open(flname, 'rb') as csvfile:
                              (outstlname, bfl, scadfl)
                     cmdline = command + ' ' + params
                     print '    ' + cmdline
-                    subprocess.call(cmdline)
+                    if makefaces:
+                        subprocess.call(cmdline)
                 else:
                     # error state
                     print("Cannot find texture: %s" % bfl)
@@ -76,14 +82,17 @@ with open(flname, 'rb') as csvfile:
             bfl = row[2].strip()
             astlname = os.path.join(tempstlfol, os.path.splitext(afl)[0] + '-head.stl')
             bstlname = os.path.join(tempstlfol, os.path.splitext(bfl)[0] + '-tail.stl')
+            astlname = '/'.join(astlname.split('\\'))  # crude windows hack to get around bad command line parsing
+            bstlname = '/'.join(bstlname.split('\\'))  # of absolute directories
             if afl in aimages and bfl in bimages:
                 outstlname = os.path.join(cwd, stlname)
-                params = '-o "%s" -D part=\\"coin\\" -D afl=\\"%s\\" -D bfl=\\"%s\\" "%s"' % \
+                params = '-o "%s" -D part=\\"coin\\" -D "afl=\\"%s\\"" -D "bfl=\\"%s\\"" "%s"' % \
                          (outstlname, astlname, bstlname, scadfl)
                 cmdline = command + ' ' + params
                 print('Making Coin %s from %s and %s' % (stlname, afl, bfl))
                 print '    ' + cmdline
-                subprocess.call(cmdline)
+                if makecoins:
+                    subprocess.call(cmdline)
             else:
                 print("Cannot form coin: %s, %s; %s is missing" % (afl, bfl, afl if afl in notfound else bfl))
 
